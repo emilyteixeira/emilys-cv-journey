@@ -1,0 +1,109 @@
+{
+  "parent": {
+    "data_source_id": "4934f4a4-2787-42ec-83d6-31dc9e2162fb"
+  },
+  "pages": [
+    {
+      "properties": {
+        "Título": "Arquivo consolidado — Trilha CV Emily Atualizada",
+        "Categoria": "Recurso",
+        "Tipo de material": "Resumo",
+        "Tema": "AI Engineering",
+        "Trilha": "AI Engineering",
+        "Status": "Concluído",
+        "Prioridade": "Alta",
+        "Confiança": "Alta",
+        "Resumo": "Documento principal com a nova trilha de 32 semanas, integrada à skill de mentoria e à progressão curricular observada na Codecademy.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/research/trilha_cv_emily_atualizada.md",
+        "Próximo passo": "Usar este documento como referência central para os módulos, planners e checkpoints.",
+        "Fase": 1
+      },
+      "content": "## Arquivo consolidado\nEste registro corresponde ao documento principal desta atualização da trilha.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/research/trilha_cv_emily_atualizada.md`\n\nO conteúdo integra diagnóstico, macrofases, planners, recursos, projeto prático e recomendações de acompanhamento no Notion."
+    },
+    {
+      "properties": {
+        "Título": "Arquivo de pesquisa — Notas da Codecademy",
+        "Categoria": "Recurso",
+        "Tipo de material": "Curso",
+        "Tema": "Dados",
+        "Trilha": "Padrão",
+        "Status": "Concluído",
+        "Prioridade": "Alta",
+        "Confiança": "Média",
+        "Resumo": "Notas de pesquisa usadas para incorporar à trilha a lógica curricular observada no caminho Data Scientist: Machine Learning Specialist.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/research/codecademy_notes.md",
+        "Próximo passo": "Revisitar este arquivo sempre que for refinar a ponte entre fundamentos de dados e Visão Computacional.",
+        "Fase": 1
+      },
+      "content": "## Arquivo de pesquisa curricular\nEste registro documenta as notas usadas para integrar fundamentos de dados, estatística, machine learning e portfólio à trilha principal.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/research/codecademy_notes.md`"
+    },
+    {
+      "properties": {
+        "Título": "Documento — Arquitetura proposta da plataforma",
+        "Categoria": "Projeto",
+        "Tipo de material": "Documentação",
+        "Tema": "System Design",
+        "Trilha": "AI Engineering",
+        "Status": "Em andamento",
+        "Prioridade": "Média",
+        "Confiança": "Média",
+        "Resumo": "Documento estrutural do projeto web e da proposta de organização do ambiente de estudo, útil como apoio para system design e operação da jornada.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/arquitetura_proposta.md",
+        "Próximo passo": "Alinhar este documento com a experiência full-stack e com o roadmap pedagógico atualizado.",
+        "Fase": 8
+      },
+      "content": "## Documento de arquitetura\nEste arquivo registra a proposta estrutural da plataforma que apoia a trilha.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/arquitetura_proposta.md`"
+    },
+    {
+      "properties": {
+        "Título": "Registro — Validation notes",
+        "Categoria": "Checkpoint",
+        "Tipo de material": "Checklist",
+        "Tema": "ML Engineering",
+        "Trilha": "Padrão",
+        "Status": "Em andamento",
+        "Prioridade": "Média",
+        "Confiança": "Média",
+        "Resumo": "Anotações de validação do projeto e dos fluxos implementados durante a evolução prática da plataforma.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/validation-notes.md",
+        "Próximo passo": "Converter as anotações em critérios formais de revisão do produto e da trilha.",
+        "Fase": 8
+      },
+      "content": "## Registro de validação\nEste item preserva as anotações de validação realizadas no projeto.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/validation-notes.md`"
+    },
+    {
+      "properties": {
+        "Título": "Registro — Ideas do projeto",
+        "Categoria": "Projeto",
+        "Tipo de material": "Resumo",
+        "Tema": "Carreira",
+        "Trilha": "Padrão",
+        "Status": "Em andamento",
+        "Prioridade": "Baixa",
+        "Confiança": "Média",
+        "Resumo": "Arquivo de ideias e possibilidades de expansão do projeto e da experiência de aprendizagem.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/ideas.md",
+        "Próximo passo": "Filtrar as ideias em backlog executável e priorizar as que apoiam estudo e portfólio.",
+        "Fase": 8
+      },
+      "content": "## Banco de ideias\nEste registro guarda ideias de evolução do projeto e da trilha.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/ideas.md`"
+    },
+    {
+      "properties": {
+        "Título": "Registro operacional — TODO do projeto",
+        "Categoria": "Checkpoint",
+        "Tipo de material": "Checklist",
+        "Tema": "ML Engineering",
+        "Trilha": "Padrão",
+        "Status": "Em andamento",
+        "Prioridade": "Alta",
+        "Confiança": "Alta",
+        "Resumo": "Lista operacional das demandas, atualizações e pendências registradas durante a implementação da plataforma e da trilha.",
+        "Evidência": "/home/ubuntu/cv-emily-roadmap/todo.md",
+        "Próximo passo": "Usar este registro para acompanhar o que já foi consolidado e o que ainda precisa ser implementado.",
+        "Fase": 8
+      },
+      "content": "## Registro operacional\nEste item registra o backlog e o histórico de pendências do projeto.\n\n**Caminho local:** `/home/ubuntu/cv-emily-roadmap/todo.md`"
+    }
+  ]
+}

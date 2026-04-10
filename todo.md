@@ -1,0 +1,18 @@
+- [x] Converter o projeto para arquitetura full-stack com backend, banco e autenticação.
+- [x] Preparar persistência de dados para conteúdo e progresso.
+- [x] Implementar navegação multi-seção com menubar superior.
+- [x] Estruturar a experiência em cinco seções com rolagem contínua.
+- [x] Conectar as seções ao modelo de dados persistente.
+- [x] Validar a interface, a persistência e os fluxos principais antes da entrega.
+- [x] Integrar armazenamento de arquivos para imagens, PDFs e anexos do portfólio e das recomendações.
+- [x] Criar API full-stack para diário, metas, recomendações, portfólio e progresso da trilha.
+- [x] Substituir o salvamento local por persistência real no backend.
+- [x] Atualizar a trilha personalizada de Visão Computacional com base na skill computer-vision-mentor e nos planejamentos já produzidos.
+- [x] Incorporar à trilha a ementa do caminho Data Scientist: Machine Learning Specialist da Codecademy.
+- [x] Consolidar todos os arquivos relevantes produzidos para a trilha em formato adequado para documentação e sincronização.
+- [x] Adicionar a documentação e os arquivos relevantes à base de dados do Notion.
+- [x] Corrigir a Home para consumir dados persistidos via tRPC em vez de depender de estado local incompleto.
+- [x] Implementar menubar superior com âncoras para 5 seções e rolagem contínua.
+- [x] Conectar a Home às coleções persistidas de roadmap, diário, metas, recomendações e portfólio.
+- [x] Adicionar painel autenticado para inicializar e salvar progresso da trilha no banco.
+- [x] Validar a interface com testes e checagens do ambiente após a integração.
