@@ -299,7 +299,7 @@ export default function Home() {
         <div className="container flex items-center justify-between gap-4 py-4">
           <div>
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-[color:var(--accent-3)]">
-              cv emily roadmap
+              Emily's Computer Vision Journey
             </p>
             <h1 className="font-display text-lg text-foreground">Plataforma editorial de Visão Computacional</h1>
           </div>
