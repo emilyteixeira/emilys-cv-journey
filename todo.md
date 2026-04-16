@@ -16,3 +16,10 @@
 - [x] Conectar a Home às coleções persistidas de roadmap, diário, metas, recomendações e portfólio.
 - [x] Adicionar painel autenticado para inicializar e salvar progresso da trilha no banco.
 - [x] Validar a interface com testes e checagens do ambiente após a integração.
+- [x] Mapear no Notion os roadmaps de pós-graduação em Visão Computacional adicionados recentemente.
+- [x] Definir como os roadmaps do Notion serão sincronizados com o banco e a interface da plataforma/blog.
+- [x] Implementar a sincronização do conteúdo do Notion para a plataforma de estudos.
+- [x] Validar a consistência dos roadmaps sincronizados e atualizar testes/documentação.
+- [ ] Implementar sincronização operacional mais completa com o Notion no backend, reduzindo a dependência de snapshots hardcoded.
+- [x] Documentar o fluxo de sincronização com o Notion, incluindo origem dos dados, schema mapeado, comando de importação, limitações e próximos passos.
+- [ ] Expandir a validação automatizada para cobrir a coleção academicRoadmaps no payload e na renderização da Home.

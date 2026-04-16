@@ -15,6 +15,13 @@
       "when": 1775765115193,
       "tag": "0001_easy_demogoblin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1776348681185,
+      "tag": "0002_charming_wind_dancer",
+      "breakpoints": true
     }
   ]
 }

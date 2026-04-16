@@ -8,6 +8,7 @@ import {
   getOwnerPlatformData,
   getPublicPlatformData,
   seedPlatformData,
+  upsertAcademicRoadmapRecord,
   upsertRoadmapProgressRecord,
 } from "./db";
 import { storagePut } from "./storage";
@@ -23,6 +24,7 @@ vi.mock("./db", async () => {
     getPublicPlatformData: vi.fn(),
     getOwnerPlatformData: vi.fn(),
     seedPlatformData: vi.fn(),
+    upsertAcademicRoadmapRecord: vi.fn(),
     upsertRoadmapProgressRecord: vi.fn(),
   };
 });
@@ -72,7 +74,9 @@ describe("platform router", () => {
       diaryEntries: [],
       goals: [],
       recommendations: [],
+      academicRoadmaps: [],
       portfolioProjects: [],
+      uploadedAssets: [],
     };
 
     vi.mocked(getPublicPlatformData).mockResolvedValue(expectedPayload as never);
@@ -91,7 +95,9 @@ describe("platform router", () => {
       diaryEntries: [],
       goals: [],
       recommendations: [],
+      academicRoadmaps: [],
       portfolioProjects: [],
+      uploadedAssets: [],
     };
 
     vi.mocked(getOwnerPlatformData).mockResolvedValue(expectedPayload as never);
@@ -176,6 +182,47 @@ describe("platform router", () => {
         url: "https://cdn.example.com/paper.png",
       }),
     );
+  });
+
+  it("syncs academic roadmaps from Notion snapshots into the local database", async () => {
+    vi.mocked(upsertAcademicRoadmapRecord).mockResolvedValue({ id: 501 } as never);
+
+    const caller = appRouter.createCaller(createContext(true));
+
+    const result = await caller.platform.syncAcademicRoadmaps({
+      items: [
+        {
+          notionPageId: "3411c6633ba9808db32dfd36f81a0289",
+          title: "[Especialização] Visão Computacional: Interpretando o Mundo Através de Imagens - Computer Vision Master",
+          institution: "PUC-Rio",
+          programType: "Especialização",
+          formatLabel: "Online com aulas ao vivo",
+          durationText: "24 meses",
+          workloadText: "360 horas",
+          summary: "Programa voltado a aplicações reais de visão computacional, aprendizagem profunda e desenho de soluções para o mercado.",
+          curriculumText: "Fundamentos de visão computacional, processamento digital de imagens, extração de informação, classificação, deep learning e aplicações setoriais.",
+          audienceText: "Profissionais de exatas e pessoas interessadas em aplicar visão computacional em contextos organizacionais.",
+          sourceUrl: "https://www.notion.so/3411c6633ba9808db32dfd36f81a0289",
+          tags: ["pos-graduacao", "visao-computacional", "roadmap"],
+          status: "published",
+          sortOrder: 1,
+        },
+      ],
+    });
+
+    expect(upsertAcademicRoadmapRecord).toHaveBeenCalledWith(
+      expect.objectContaining({
+        userId: 7,
+        notionPageId: "3411c6633ba9808db32dfd36f81a0289",
+        institution: "PUC-Rio",
+        tagsJson: JSON.stringify(["pos-graduacao", "visao-computacional", "roadmap"]),
+        status: "published",
+      }),
+    );
+    expect(result).toEqual({
+      syncedCount: 1,
+      items: [{ id: 501 }],
+    });
   });
 
   it("creates portfolio project with persisted cover metadata when upload is provided", async () => {

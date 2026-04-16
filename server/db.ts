@@ -1,8 +1,10 @@
 import { and, desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
+  academicRoadmaps,
   diaryEntries,
   goals,
+  InsertAcademicRoadmap,
   InsertDiaryEntry,
   InsertGoal,
   InsertPortfolioProject,
@@ -53,7 +55,7 @@ async function requireDb() {
 export async function getPublicPlatformData() {
   const db = await requireDb();
 
-  const [profileRows, diaryRows, goalRows, recommendationRows, projectRows, progressRows, assetRows] =
+  const [profileRows, diaryRows, goalRows, recommendationRows, projectRows, progressRows, assetRows, academicRoadmapRows] =
     await Promise.all([
       db.select().from(siteProfile).orderBy(desc(siteProfile.updatedAtUtc)).limit(1),
       db.select().from(diaryEntries).where(eq(diaryEntries.status, "published")).orderBy(desc(diaryEntries.publishedAtUtc), desc(diaryEntries.updatedAtUtc)).limit(6),
@@ -62,6 +64,7 @@ export async function getPublicPlatformData() {
       db.select().from(portfolioProjects).orderBy(desc(portfolioProjects.updatedAtUtc)).limit(6),
       db.select().from(roadmapProgress).orderBy(desc(roadmapProgress.updatedAtUtc)).limit(1),
       db.select().from(uploadedAssets).orderBy(desc(uploadedAssets.createdAtUtc)).limit(12),
+      db.select().from(academicRoadmaps).where(eq(academicRoadmaps.status, "published")).orderBy(desc(academicRoadmaps.sortOrder), desc(academicRoadmaps.updatedAtUtc)).limit(12),
     ]);
 
   const profile = profileRows[0] ?? null;
@@ -83,13 +86,17 @@ export async function getPublicPlatformData() {
     })),
     roadmapProgress: progress,
     uploadedAssets: assetRows,
+    academicRoadmaps: academicRoadmapRows.map(roadmap => ({
+      ...roadmap,
+      tags: parseJsonArray(roadmap.tagsJson),
+    })),
   };
 }
 
 export async function getOwnerPlatformData(userId: number) {
   const db = await requireDb();
 
-  const [profileRows, diaryRows, goalRows, recommendationRows, projectRows, progressRows, assetRows] =
+  const [profileRows, diaryRows, goalRows, recommendationRows, projectRows, progressRows, assetRows, academicRoadmapRows] =
     await Promise.all([
       db.select().from(siteProfile).where(eq(siteProfile.userId, userId)).orderBy(desc(siteProfile.updatedAtUtc)).limit(1),
       db.select().from(diaryEntries).where(eq(diaryEntries.userId, userId)).orderBy(desc(diaryEntries.updatedAtUtc)),
@@ -98,6 +105,7 @@ export async function getOwnerPlatformData(userId: number) {
       db.select().from(portfolioProjects).where(eq(portfolioProjects.userId, userId)).orderBy(desc(portfolioProjects.updatedAtUtc)),
       db.select().from(roadmapProgress).where(eq(roadmapProgress.userId, userId)).orderBy(desc(roadmapProgress.updatedAtUtc)).limit(1),
       db.select().from(uploadedAssets).where(eq(uploadedAssets.userId, userId)).orderBy(desc(uploadedAssets.createdAtUtc)),
+      db.select().from(academicRoadmaps).where(eq(academicRoadmaps.userId, userId)).orderBy(desc(academicRoadmaps.sortOrder), desc(academicRoadmaps.updatedAtUtc)),
     ]);
 
   return {
@@ -113,6 +121,10 @@ export async function getOwnerPlatformData(userId: number) {
         }
       : null,
     uploadedAssets: assetRows,
+    academicRoadmaps: academicRoadmapRows.map(roadmap => ({
+      ...roadmap,
+      tags: parseJsonArray(roadmap.tagsJson),
+    })),
   };
 }
 
@@ -218,6 +230,50 @@ export async function createUploadedAssetRecord(input: InsertUploadedAsset) {
   const db = await requireDb();
   await db.insert(uploadedAssets).values(input);
   const rows = await db.select().from(uploadedAssets).where(eq(uploadedAssets.userId, input.userId!)).orderBy(desc(uploadedAssets.createdAtUtc)).limit(1);
+  return rows[0];
+}
+
+export async function upsertAcademicRoadmapRecord(input: InsertAcademicRoadmap) {
+  const db = await requireDb();
+  const existing = await db
+    .select()
+    .from(academicRoadmaps)
+    .where(eq(academicRoadmaps.notionPageId, input.notionPageId!))
+    .limit(1);
+
+  if (existing[0]) {
+    await db
+      .update(academicRoadmaps)
+      .set({
+        userId: input.userId!,
+        slug: input.slug!,
+        title: input.title!,
+        institution: input.institution ?? null,
+        programType: input.programType ?? null,
+        formatLabel: input.formatLabel ?? null,
+        durationText: input.durationText ?? null,
+        workloadText: input.workloadText ?? null,
+        summary: input.summary!,
+        curriculumText: input.curriculumText ?? null,
+        audienceText: input.audienceText ?? null,
+        sourceUrl: input.sourceUrl!,
+        tagsJson: input.tagsJson!,
+        status: input.status ?? "published",
+        sortOrder: input.sortOrder ?? 0,
+        updatedAtUtc: input.updatedAtUtc!,
+      })
+      .where(eq(academicRoadmaps.id, existing[0].id));
+
+    const rows = await db.select().from(academicRoadmaps).where(eq(academicRoadmaps.id, existing[0].id)).limit(1);
+    return rows[0];
+  }
+
+  await db.insert(academicRoadmaps).values(input);
+  const rows = await db
+    .select()
+    .from(academicRoadmaps)
+    .where(eq(academicRoadmaps.notionPageId, input.notionPageId!))
+    .limit(1);
   return rows[0];
 }
 

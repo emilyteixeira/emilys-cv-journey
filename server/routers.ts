@@ -14,12 +14,30 @@ import {
   seedPlatformData,
   updateDiaryEntryRecord,
   updateGoalRecord,
+  upsertAcademicRoadmapRecord,
   upsertRoadmapProgressRecord,
   upsertSiteProfileRecord,
 } from "./db";
 import { storagePut } from "./storage";
 
 const platformSectionEnum = z.enum(["roadmap", "diary", "goals", "recommendations", "portfolio", "general"]);
+
+const academicRoadmapInputSchema = z.object({
+  notionPageId: z.string().min(8).max(64),
+  title: z.string().min(3).max(255),
+  institution: z.string().max(255).optional().nullable(),
+  programType: z.string().max(120).optional().nullable(),
+  formatLabel: z.string().max(120).optional().nullable(),
+  durationText: z.string().max(120).optional().nullable(),
+  workloadText: z.string().max(120).optional().nullable(),
+  summary: z.string().min(20),
+  curriculumText: z.string().max(15000).optional().nullable(),
+  audienceText: z.string().max(6000).optional().nullable(),
+  sourceUrl: z.string().url(),
+  tags: z.array(z.string().min(1).max(40)).max(12).default([]),
+  status: z.enum(["draft", "published"]).default("published"),
+  sortOrder: z.number().int().min(0).max(999).default(0),
+});
 
 const uploadedFileInputSchema = z
   .object({
@@ -275,6 +293,46 @@ const platformRouter = router({
       }
 
       return recommendation;
+    }),
+
+  syncAcademicRoadmaps: protectedProcedure
+    .input(
+      z.object({
+        items: z.array(academicRoadmapInputSchema).min(1).max(20),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const timestamp = nowUtc();
+
+      const syncedItems = await Promise.all(
+        input.items.map((item, index) =>
+          upsertAcademicRoadmapRecord({
+            userId: ctx.user.id,
+            notionPageId: item.notionPageId,
+            slug: `${slugify(item.title)}-${item.notionPageId.slice(0, 8)}`,
+            title: item.title,
+            institution: item.institution ?? null,
+            programType: item.programType ?? null,
+            formatLabel: item.formatLabel ?? null,
+            durationText: item.durationText ?? null,
+            workloadText: item.workloadText ?? null,
+            summary: item.summary,
+            curriculumText: item.curriculumText ?? null,
+            audienceText: item.audienceText ?? null,
+            sourceUrl: item.sourceUrl,
+            tagsJson: JSON.stringify(item.tags),
+            status: item.status,
+            sortOrder: item.sortOrder ?? index,
+            createdAtUtc: timestamp,
+            updatedAtUtc: timestamp,
+          }),
+        ),
+      );
+
+      return {
+        syncedCount: syncedItems.length,
+        items: syncedItems,
+      };
     }),
 
   createPortfolioProject: protectedProcedure

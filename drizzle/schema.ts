@@ -105,6 +105,28 @@ export const uploadedAssets = mysqlTable("uploadedAssets", {
   createdAtUtc: bigint("createdAtUtc", { mode: "number" }).notNull(),
 });
 
+export const academicRoadmaps = mysqlTable("academicRoadmaps", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  notionPageId: varchar("notionPageId", { length: 64 }).notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  title: varchar("title", { length: 255 }).notNull(),
+  institution: varchar("institution", { length: 255 }),
+  programType: varchar("programType", { length: 120 }),
+  formatLabel: varchar("formatLabel", { length: 120 }),
+  durationText: varchar("durationText", { length: 120 }),
+  workloadText: varchar("workloadText", { length: 120 }),
+  summary: text("summary").notNull(),
+  curriculumText: text("curriculumText"),
+  audienceText: text("audienceText"),
+  sourceUrl: text("sourceUrl").notNull(),
+  tagsJson: text("tagsJson").notNull(),
+  status: mysqlEnum("status", ["draft", "published"]).default("published").notNull(),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAtUtc: bigint("createdAtUtc", { mode: "number" }).notNull(),
+  updatedAtUtc: bigint("updatedAtUtc", { mode: "number" }).notNull(),
+});
+
 export const siteProfile = mysqlTable("siteProfile", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
@@ -129,5 +151,7 @@ export type PortfolioProject = typeof portfolioProjects.$inferSelect;
 export type InsertPortfolioProject = typeof portfolioProjects.$inferInsert;
 export type UploadedAsset = typeof uploadedAssets.$inferSelect;
 export type InsertUploadedAsset = typeof uploadedAssets.$inferInsert;
+export type AcademicRoadmap = typeof academicRoadmaps.$inferSelect;
+export type InsertAcademicRoadmap = typeof academicRoadmaps.$inferInsert;
 export type SiteProfile = typeof siteProfile.$inferSelect;
 export type InsertSiteProfile = typeof siteProfile.$inferInsert;
