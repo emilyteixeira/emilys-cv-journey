@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import AcademicRoadmapsShowcase from "@/components/AcademicRoadmapsShowcase";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
@@ -357,7 +358,7 @@ export default function Home() {
                   Uma home contínua para estudar, registrar e transformar progresso em <span className="text-[color:var(--accent-1)]">portfólio vivo</span>.
                 </h2>
                 <p className="max-w-2xl font-serif text-lg leading-8 text-[color:var(--foreground-soft)]">
-                  A página opera como base full-stack: as cinco seções da navegação estão conectadas a uma camada persistente capaz de armazenar progresso, anotações, metas, recomendações e projetos, inclusive com anexos enviados para armazenamento remoto.
+                  A página opera como base full-stack: as cinco seções da navegação estão conectadas a uma camada persistente capaz de armazenar progresso, anotações, metas, recomendações e projetos, inclusive com anexos enviados para armazenamento remoto e roadmaps acadêmicos sincronizados diretamente do Notion.
                 </p>
               </div>
 
@@ -646,6 +647,10 @@ export default function Home() {
               <p className="mt-3 max-w-3xl leading-8 text-[color:var(--foreground-soft)]">
                 A área de recomendações recebe materiais didáticos, referências técnicas e recursos aplicados. Agora ela também aceita anexos persistidos, o que permite ligar PDFs, imagens e capturas diretamente ao registro salvo no backend.
               </p>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                <CheckCircle2 className="h-4 w-4 text-[color:var(--accent-1)]" />
+                Sincronização acadêmica ao vivo disponível operacionalmente via Notion + MCP
+              </div>
             </div>
 
             {isAuthenticated ? (
@@ -741,49 +746,7 @@ export default function Home() {
               </form>
             ) : null}
 
-            {academicRoadmaps.length ? (
-              <div className="mb-8 grid gap-5 lg:grid-cols-2">
-                {academicRoadmaps.map(roadmap => (
-                  <article key={roadmap.id} className="glass-panel overflow-hidden p-6">
-                    <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                      <span>{roadmap.programType ?? "Roadmap acadêmico"}</span>
-                      <span>•</span>
-                      <span>{roadmap.institution ?? "Origem sincronizada do Notion"}</span>
-                    </div>
-                    <h4 className="mt-3 text-2xl font-semibold text-foreground">{roadmap.title}</h4>
-                    <p className="mt-4 leading-7 text-[color:var(--foreground-soft)]">{excerpt(roadmap.summary, 260)}</p>
-                    <div className="mt-5 grid gap-3 text-sm text-[color:var(--foreground-soft)] sm:grid-cols-2">
-                      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                        <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Formato</p>
-                        <p className="mt-2 text-foreground">{roadmap.formatLabel ?? "A confirmar"}</p>
-                      </div>
-                      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                        <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Duração e carga</p>
-                        <p className="mt-2 text-foreground">{[roadmap.durationText, roadmap.workloadText].filter(Boolean).join(" · ") || "Snapshot importado do Notion"}</p>
-                      </div>
-                    </div>
-                    {roadmap.curriculumText ? (
-                      <blockquote className="mt-5 border-l-2 border-[color:var(--accent-1)] pl-4 text-sm leading-7 text-muted-foreground">
-                        {excerpt(roadmap.curriculumText, 320)}
-                      </blockquote>
-                    ) : null}
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {roadmap.tags.slice(0, 5).map(tag => (
-                        <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-muted-foreground">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-5 flex flex-wrap gap-4 text-sm">
-                      <a href={roadmap.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[color:var(--accent-1)] hover:underline">
-                        Abrir roadmap no Notion
-                        <ArrowRight className="h-4 w-4" />
-                      </a>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            ) : null}
+            <AcademicRoadmapsShowcase roadmaps={academicRoadmaps} />
 
             <div className="grid gap-5 lg:grid-cols-2">
               {recommendations.length ? (
@@ -828,7 +791,7 @@ export default function Home() {
                 })
               ) : (
                 <div className="glass-panel p-6 text-[color:var(--foreground-soft)] lg:col-span-2">
-                  Ainda não há recomendações registradas manualmente, mas a coleção já está integrada ao backend para receber novos materiais, anexos persistidos e roadmaps acadêmicos sincronizados do Notion.
+                  Ainda não há recomendações registradas manualmente, mas a coleção já está integrada ao backend para receber novos materiais, anexos persistidos e roadmaps acadêmicos sincronizados diretamente do Notion.
                 </div>
               )}
             </div>

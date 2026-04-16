@@ -14,6 +14,15 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["server/**/*.test.ts", "server/**/*.spec.ts"],
+    include: [
+      "server/**/*.test.ts",
+      "server/**/*.spec.ts",
+      "server/**/*.test.tsx",
+      "server/**/*.spec.tsx",
+      "client/src/**/*.test.ts",
+      "client/src/**/*.spec.ts",
+      "client/src/**/*.test.tsx",
+      "client/src/**/*.spec.tsx",
+    ],
   },
 });

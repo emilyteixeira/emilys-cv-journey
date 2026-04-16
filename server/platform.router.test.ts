@@ -74,7 +74,14 @@ describe("platform router", () => {
       diaryEntries: [],
       goals: [],
       recommendations: [],
-      academicRoadmaps: [],
+      academicRoadmaps: [
+        {
+          id: 1,
+          title: "[Especialização] Visão Computacional: Interpretando o Mundo Através de Imagens - Computer Vision Master",
+          institution: "PUC-Rio",
+          sourceUrl: "https://www.notion.so/3411c6633ba9808db32dfd36f81a0289",
+        },
+      ],
       portfolioProjects: [],
       uploadedAssets: [],
     };
@@ -95,7 +102,15 @@ describe("platform router", () => {
       diaryEntries: [],
       goals: [],
       recommendations: [],
-      academicRoadmaps: [],
+      academicRoadmaps: [
+        {
+          id: 1,
+          title: "[Especialização] Visão Computacional: Interpretando o Mundo Através de Imagens - Computer Vision Master",
+          institution: "PUC-Rio",
+          sourceUrl: "https://www.notion.so/3411c6633ba9808db32dfd36f81a0289",
+          status: "published",
+        },
+      ],
       portfolioProjects: [],
       uploadedAssets: [],
     };

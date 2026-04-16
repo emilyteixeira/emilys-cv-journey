@@ -20,6 +20,11 @@
 - [x] Definir como os roadmaps do Notion serão sincronizados com o banco e a interface da plataforma/blog.
 - [x] Implementar a sincronização do conteúdo do Notion para a plataforma de estudos.
 - [x] Validar a consistência dos roadmaps sincronizados e atualizar testes/documentação.
-- [ ] Implementar sincronização operacional mais completa com o Notion no backend, reduzindo a dependência de snapshots hardcoded.
+- [x] Implementar sincronização operacional mais completa com o Notion no backend, reduzindo a dependência de snapshots hardcoded.
 - [x] Documentar o fluxo de sincronização com o Notion, incluindo origem dos dados, schema mapeado, comando de importação, limitações e próximos passos.
-- [ ] Expandir a validação automatizada para cobrir a coleção academicRoadmaps no payload e na renderização da Home.
+- [x] Expandir a validação automatizada para cobrir a coleção academicRoadmaps no payload e na renderização da Home.
+- [x] Validar a reconexão do MCP do Notion e mapear diretamente as páginas-base dos roadmaps acadêmicos.
+- [x] Implementar importação direta do Notion no backend, sem depender de catálogo manual para os roadmaps acadêmicos.
+- [x] Refinar a comunicação da interface e ampliar os testes de parser/payload para refletir a sincronização operacional ao vivo dos roadmaps do Notion.
+- [x] Adicionar um fluxo visível na interface para atualização/sincronização dos roadmaps do Notion ou assumir explicitamente no produto que a sincronização ao vivo é operacional via script.
+- [x] Adicionar teste de renderização da Home cobrindo a exibição dos cards de roadmaps acadêmicos sincronizados.
